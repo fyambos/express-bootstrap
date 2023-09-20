@@ -5,16 +5,16 @@ export class UserController {
     constructor(private userService: UserService) {}
 
     add(username: string): User {
-        // is the username empty ?
-        // is the username whitespaced ?
-        // other checks...
+        if (!username || username.trim() === '') {
+            throw new Error('Username cannot be empty or whitespace.');
+        }
         return this.userService.add(username);
     }
 
     getById(id: number): User | null {
-        // is the id a decimal ?
-        // is the id a negative number ?
-        // other checks...
+        if (isNaN(id) || id <= 0 || !Number.isInteger(id)) {
+            throw new Error('Invalid user ID. Please provide a positive integer.');
+        }
         return this.userService.getById(id);
     }
 }
